@@ -54,23 +54,5 @@ function isAnagram(a, b) {
     return false
   }
 
-  const charOccurencesA = createCharacterOccurrenceMap(a)
-  const charOccurencesB = createCharacterOccurrenceMap(b)
-
-  // Luckily, a shallow compare is sufficient for strings and numbers 😊
-  return isShallowlyEqual(charOccurencesA, charOccurencesB)
-}
-
-function createCharacterOccurrenceMap(word) {
-  // This method counts the occurences of each character in a word.
-  // E.g. 'yolo' gets transformed into {'y': 1, 'o': 2, 'l': 1}.
-  return [...word].reduce((map, char) => {
-    map[char] = map[char] ? map[char] + 1 : 1
-
-    return map
-  }, {})
-}
-
-function isShallowlyEqual(a, b) {
-  return Object.keys(a).every(key => b[key] === a[key]) && Object.keys(b).every(key => a[key] === b[key])
+  return [...a].sort().join() === [...b].sort().join()
 }
