@@ -69,7 +69,7 @@ function solvePartTwo(input) {
 
   /**
    * At this point, the same memory bank layout (aka state) has been added twice.
-   * How many interations did it take to once again reach this exact same state?
+   * How many iterations does it take to reach this exact same state once more?
    */
   return states.lastIndexOf(memoryBanks.join()) - states.indexOf(memoryBanks.join())
 }
