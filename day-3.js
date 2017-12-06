@@ -1,7 +1,5 @@
 // Answers to the challenge 🤓
-// Sometimes, part one results in being above or below the actual answer by one. So, that's why the actual
-// answer's differs by one from my implementation. So I can solve the challenge in max. 3 tries 😇
-console.log(solvePartOne(325489)) // I get 553, while the actual answer is 552.
+console.log(solvePartOne(325489)) // 552
 console.log(solvePartTwo(325489)) // 330785
 
 function solvePartOne(input) {
@@ -14,24 +12,71 @@ function solvePartOne(input) {
    * 42  21  22  23  24  25  26
    * 43  44  45  46  47  48  49
    *
-   * Map input number to the next perfect odd square and calculate the steps to the center from
-   * there. E.g., numbers 1 to 8 map to 9 as perfect odd square, numbers 9 to 24 map to 25, etc.
+   * Map the input number to the next perfect odd square and calculate the steps to the center from
+   * there. E.g., numbers 1 to 9 map to 9 as perfect odd square, numbers 9 to 25 map to 25, etc.
    * Walking from the perfect odd square to the center is the "worst case scenario", so the amount of steps
-   * is ought to be lower than that. Besides, the input number may not be (and very probably is not)
-   * the perfect odd square. Therefore, calculate the amount of steps from the odd square to the actual
+   * is ought to be lower than that. Therefore, calculate the amount of steps from the odd square to the actual
    * input number, knowing that the length of the sides is the square root of the odd square, and subtract
    * this from the amount of steps to the center you calculated before.
    * And then, well, pray and hope for the best! 🙏🏻
    */
 
-  // These "formulas" were found by a couple of hours of trial-and-error on a sheet of paper and
-  // using a lot of test cases, so that's why they lack a good mathematical base 😅
-  // The addition of 0.01 is done to counter even numbers #lazymode
-  const nextOddSquare = Math.ceil(Math.sqrt(input) + 1.01) ** 2
-  const stepsToCenterFromOddSquare = Math.floor((Math.sqrt(input) + 1) / 2) * 2 // sqrt, + 1, floor, +1 als even, -1, gaat ook
+   // This one's easy 🙃
+  if (input === 1) {
+    return 0
+  }
+  
+  // Some constants we'll be using a lot
+  const nextSquare = Math.ceil(Math.sqrt(input))
+  const nextOddSquare = (nextSquare % 2 === 0 ? nextSquare + 1 : nextSquare) ** 2
+  const stepsToCenterFromOddSquare = Math.sqrt(nextOddSquare) - 1
+  const stepsToCenterOfSideFromCorner = Math.floor(Math.sqrt(nextOddSquare) / 2)
 
-  const magic = (nextOddSquare - input) % (Math.sqrt(nextOddSquare) - 1)
-  return magic || stepsToCenterFromOddSquare - 2
+  /**
+   * Determine which side of the spiral the input number is on (left, top, right, bottom). To do
+   * this, we first have to know the numbers on the corners. Right bottom is always the odd square.
+   */
+  const topRightNumber = nextOddSquare - 6 * (Math.floor(Math.sqrt(nextOddSquare) / 2))
+  const topLeftNumber = topRightNumber + Math.sqrt(nextOddSquare) - 1
+  const bottomLeftNumber = nextOddSquare - Math.sqrt(nextOddSquare) + 1
+
+  /**
+   * If the input number is on one of the corners, the amount of steps is the same as the amount
+   * needed to travel to the center from the odd square.
+   */
+  if (input === topRightNumber || input === topLeftNumber || input === bottomLeftNumber || input === nextOddSquare) {
+    return stepsToCenterFromOddSquare
+  }
+
+  /**
+   * OK, so the input is on one of the sides, but what side exactly? As soon as we know this,
+   * we can check how many steps we need to subtract from `stepsToCenterFromOddSquare`.
+   * We have to do a subtraction because the amount of steps needed to go to the center starting
+   * from an odd square is "worst case scenario". Those corner numbers need the most steps, you know.
+   */
+  let stepsToSubtract = 0
+  if (input > bottomLeftNumber && input < nextOddSquare) {
+    // Bottom side of the spiral
+    const middleNumberOfBottomSide = nextOddSquare - stepsToCenterOfSideFromCorner
+    stepsToSubtract = Math.abs(middleNumberOfBottomSide - input) - stepsToCenterOfSideFromCorner
+
+  } else if (input > topLeftNumber && input < bottomLeftNumber) {
+    // Left side of the spiral
+    const middleNumberOfLeftSide = bottomLeftNumber - stepsToCenterOfSideFromCorner
+    stepsToSubtract = Math.abs(middleNumberOfLeftSide - input) - stepsToCenterOfSideFromCorner
+
+  } else if (input > topRightNumber && input < topLeftNumber) {
+    // Top side of the spiral
+    const middleNumberOfTopSide = topLeftNumber - stepsToCenterOfSideFromCorner
+    stepsToSubtract = Math.abs(middleNumberOfTopSide - input) - stepsToCenterOfSideFromCorner
+
+  } else if (input < topRightNumber) {
+    // Right side of the spiral
+    const middleNumberOfRightSide = topRightNumber - stepsToCenterOfSide
+    stepsToSubtract = Math.abs(middleNumberOfRightSide - input) - stepsToCenterOfSide
+  }
+
+  return stepsToCenterFromOddSquare + stepsToSubtract
 }
 
 function solvePartTwo(input) {
