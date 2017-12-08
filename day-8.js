@@ -17,51 +17,50 @@ function solvePartTwo(register) {
 }
 
 function executeInstructions(instructions) {
-  const register = {}
   let maxValue = 0
 
-  instructions.forEach(i => {
+  const register = instructions.reduce((register, instruction) => {
     // Initialize the register if it hasn't been done already
-    register[i.conditionRegister] = register[i.conditionRegister] || 0
-    register[i.register] = register[i.register] || 0
+    register[instruction.conditionRegister] = register[instruction.conditionRegister] || 0
+    register[instruction.register] = register[instruction.register] || 0
 
     // Take care of these "dec" and "inc" thingies
-    const amount = i.operation === 'dec' ? -i.amount : i.amount
+    const amount = instruction.operation === 'dec' ? -instruction.amount : instruction.amount
 
-    switch (i.conditionOperator) {
+    switch (instruction.conditionOperator) {
       case '<':
-        if (register[i.conditionRegister] < i.conditionAmount) {
-          register[i.register] += amount
+        if (register[instruction.conditionRegister] < instruction.conditionAmount) {
+          register[instruction.register] += amount
         }
         break
 
       case '>':
-        if (register[i.conditionRegister] > i.conditionAmount) {
-          register[i.register] += amount
+        if (register[instruction.conditionRegister] > instruction.conditionAmount) {
+          register[instruction.register] += amount
         }
         break
 
       case '>=':
-        if (register[i.conditionRegister] >= i.conditionAmount) {
-          register[i.register] += amount
+        if (register[instruction.conditionRegister] >= instruction.conditionAmount) {
+          register[instruction.register] += amount
         }
         break
 
       case '<=':
-        if (register[i.conditionRegister] <= i.conditionAmount) {
-          register[i.register] += amount
+        if (register[instruction.conditionRegister] <= instruction.conditionAmount) {
+          register[instruction.register] += amount
         }
         break
 
       case '==':
-        if (register[i.conditionRegister] == i.conditionAmount) {
-          register[i.register] += amount
+        if (register[instruction.conditionRegister] == instruction.conditionAmount) {
+          register[instruction.register] += amount
         }
         break
 
       case '!=':
-        if (register[i.conditionRegister] !== i.conditionAmount) {
-          register[i.register] += amount
+        if (register[instruction.conditionRegister] !== instruction.conditionAmount) {
+          register[instruction.register] += amount
         }
         break
 
@@ -69,8 +68,10 @@ function executeInstructions(instructions) {
         break
     }
 
-    maxValue = register[i.register] > maxValue ? register[i.register] : maxValue
-  })
+    maxValue = register[instruction.register] > maxValue ? register[instruction.register] : maxValue
+
+    return register
+  }, {})
 
   register.__maxValue = maxValue
 
