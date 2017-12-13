@@ -7,4 +7,4 @@ A collection of solutions for the challenges of [AoC 2017](http://adventofcode.c
 ¯\\\_(ツ)\_/¯ For the lulz and to keep sharp of course! 💩
 
 ## How?
-As my solutions are written in JavaScript, you can run them by using node. At least, that's what I do. Just do something like ```node day-1.js``` and you're good to go 😉
+As my solutions are written in JavaScript, you can run them by using `node`. At least, that's what I do. Just do something like ```node day-1``` and you're good to go! 😉

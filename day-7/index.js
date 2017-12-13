@@ -1,5 +1,6 @@
 const fs = require('fs')
-const input = fs.readFileSync('./input-day-7.txt', 'utf-8')
+const path = require('path')
+const input = fs.readFileSync(path.join(__dirname, './input.txt'), 'utf-8')
 
 // Putting this one out of function scope to not have to compile this regex each time #cpulove #savetheplanet 🌍
 const programInputRegex = /([a-z]+)\s\(([0-9]+)\)(?:\s->\s([a-z, ]+))?/i

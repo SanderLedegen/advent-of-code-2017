@@ -1,5 +1,6 @@
 const fs = require('fs')
-const input = fs.readFileSync('./input-day-11.txt', 'utf-8')
+const path = require('path')
+const input = fs.readFileSync(path.join(__dirname, './input.txt'), 'utf-8')
 
 // Answers to the challenge 🤓
 solvePartOneAndTwo(input) // 824 & 1548
