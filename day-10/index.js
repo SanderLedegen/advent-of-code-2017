@@ -2,9 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const input = fs.readFileSync(path.join(__dirname, './input.txt'), 'utf-8')
 
-// Answers to the challenge 🤓
-console.log(solvePartOne(input)) // 2928
-console.log(solvePartTwo(input)) // 0c2f794b2eb555f7830766bf8fb65a16
+// This checks if this file is run directly or run through a "require" (e.g. day 14)
+if (require.main === module) {
+  // Answers to the challenge 🤓
+  console.log(solvePartOne(input)) // 2928
+  console.log(solvePartTwo(input)) // 0c2f794b2eb555f7830766bf8fb65a16
+}
 
 function solvePartOne(input) {
   const lengths = input.split(',').map(i => +i)
@@ -70,3 +73,5 @@ function calculateHash(lengths, list = [...new Array(256).keys()], curPos = 0, s
 function toASCII(input) {
   return [...input].map(c => c.charCodeAt(0))
 }
+
+module.exports = { knotHash: solvePartTwo }
