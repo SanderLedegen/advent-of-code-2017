@@ -10,7 +10,7 @@ const numOfIterationsPartOne = 40*1000*1000
 const numOfIterationsPartTwo = 5*1000*1000
 
 // Answers to the challenge 🤓
-// console.log(solvePartOne(startValueGeneratorA, startValueGeneratorB)) // 577
+console.log(solvePartOne(startValueGeneratorA, startValueGeneratorB)) // 577
 console.log(solvePartTwo(startValueGeneratorA, startValueGeneratorB)) // 316
 
 function solvePartOne(startValueGeneratorA, startValueGeneratorB) {
