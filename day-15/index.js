@@ -32,24 +32,27 @@ function solvePartTwo(startValueGeneratorA, startValueGeneratorB) {
   let matches = 0
 
   const valuesGeneratorA = []
-  while (valuesGeneratorA.length < numOfIterationsPartTwo) {
-    startValueGeneratorA = getNextValueGenerator(startValueGeneratorA, factorGeneratorA) % division
-
-    if (startValueGeneratorA % 4 === 0) {
-      valuesGeneratorA.push(startValueGeneratorA)
-    }
-  }
-
   const valuesGeneratorB = []
-  while (valuesGeneratorB.length < numOfIterationsPartTwo) {
-    startValueGeneratorB = getNextValueGenerator(startValueGeneratorB, factorGeneratorB) % division
 
-    if (startValueGeneratorB % 8 === 0) {
-      valuesGeneratorB.push(startValueGeneratorB)
+  while (valuesGeneratorA.length < numOfIterationsPartTwo || valuesGeneratorB.length < numOfIterationsPartTwo) {
+    if (valuesGeneratorA.length < numOfIterationsPartTwo) {
+      startValueGeneratorA = getNextValueGenerator(startValueGeneratorA, factorGeneratorA) % division
+
+      if (startValueGeneratorA % 4 === 0) {
+        valuesGeneratorA.push(startValueGeneratorA)
+      }
+    }
+
+    if (valuesGeneratorB.length < numOfIterationsPartTwo) {
+      startValueGeneratorB = getNextValueGenerator(startValueGeneratorB, factorGeneratorB) % division
+  
+      if (startValueGeneratorB % 8 === 0) {
+        valuesGeneratorB.push(startValueGeneratorB)
+      }
     }
   }
 
-  for (let ii = 0; ii < valuesGeneratorA.length; ii++) {
+  for (let ii = 0; ii < numOfIterationsPartTwo; ii++) {
     if (doLowest16BitsMatch(valuesGeneratorA[ii], valuesGeneratorB[ii])) {
       matches += 1
     }
