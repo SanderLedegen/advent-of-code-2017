@@ -3,12 +3,7 @@ const cachedSumMap = {}
 
 const calculatePowerLevel = (x, y, serialNumber) => {
   const rackId = x + 10
-  let powerLevel = (rackId * y + serialNumber) * rackId
-
-  powerLevel = `${powerLevel}`
-  powerLevel = powerLevel.length >= 3 ? +powerLevel.slice(-3)[0] - 5 : -5
-
-  return powerLevel
+  return Math.floor(((rackId * y + serialNumber) * rackId) % 1000 / 100) - 5
 }
 
 const sumGridSquare = (grid, x, y, squareSize) => {
