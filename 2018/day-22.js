@@ -69,14 +69,5 @@ for (let yy = 0; yy < CAVE_SIZE; yy += 1) {
   }
 }
 
-// for (let yy = 0; yy < CAVE_SIZE; yy += 1) {
-//   let line = ''
-//   for (let xx = 0; xx < CAVE_SIZE; xx += 1) {
-//     line += cave[yy][xx] === 0 ? '.' : cave[yy][xx] === 1 ? '=' : '|'
-//   }
-
-//   console.log(line)
-// }
-
 const answerPartOne = determineRiskLevel(cave, target)
 console.log(`Answer part one: ${answerPartOne}`)
