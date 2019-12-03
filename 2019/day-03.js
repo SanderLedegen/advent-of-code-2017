@@ -7,8 +7,8 @@ const [wireA, wireB] = input.split('\n').map(trace)
 const partOne = Object.keys(wireA)
   .filter(keyA => wireB[keyA])
   .map(c => {
-    const split = c.split(',').map(Number)
-    return Math.abs(split[0]) + Math.abs(split[1])
+    const [x, y] = c.split(',').map(Number)
+    return Math.abs(x) + Math.abs(y)
   })
   .reduce((min, curr) => Math.min(curr, min), Infinity)
 
