@@ -111,7 +111,7 @@ function partTwo(input) {
 
 function parseInput(input) {
   return input.split('\n').reduce((instructions, line) => {
-    const match = line.match(/(\w+)\s((?:\+|-)\d+)/);
+    const match = line.match(/(\w+)\s([+-]\d+)/);
 
     instructions.push({
       op: match[1],
