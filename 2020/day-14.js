@@ -50,7 +50,7 @@ function partTwo(input) {
   const lines = input.split('\n');
   const mem = [];
   let bitmask = undefined;
-  let sum = 0n;
+  let sum = 0;
 
   const applyBitmask = (address, bitmask) => {
     const binary = address.toString(2).padStart(bitmask.length, '0');
@@ -92,7 +92,7 @@ function partTwo(input) {
 
     const matches = line.match(/mem\[(\d+)\] = (\d+)/);
     const addr = +matches[1];
-    const value = BigInt(matches[2]);
+    const value = +matches[2];
 
     const addresses = applyBitmask(addr, bitmask);
     addresses.forEach((a) => {
